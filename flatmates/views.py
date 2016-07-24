@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django import forms
 from django.contrib.auth.models import User
+from .forms.user import UserForm
 
 
 # class Home(generic.DetailView):
@@ -22,33 +23,36 @@ def home(request):
 
 
 class Register(generic.View):
-    #initial = {'key': 'value'}
     template_name = 'flatmates/register.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('flatmates:home'))
         else:
-            return render(request, self.template_name)
+            form = UserForm()
+            return render(request, self.template_name, {'form':form})
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('flatmates:home'))
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            User.objects.get(username = request.POST['username'])
-        except User.DoesNotExist:
-            user = User.objects.create_user(request.POST['username'], request.POST['email'],
-                                            request.POST['password'])
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            user.save()
-            u = authenticate(username=request.POST['username'], password=request.POST['password'])
-            login(request, u)
-            return HttpResponseRedirect(reverse('flatmates:home'))
+        form = UserForm(request.POST)
+        if form.is_valid():
+            try:
+                User.objects.get(username = form.cleaned_data['username'])
+            except User.DoesNotExist:
+                user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
+                                                form.cleaned_data['password'])
+                user.first_name = form.cleaned_data['first_name']
+                user.last_name = form.cleaned_data['last_name']
+                user.save()
+                u = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+                login(request, u)
+                return HttpResponseRedirect(reverse('flatmates:home'))
+            else:
+                return HttpResponseRedirect(reverse('flatmates:login'))
         else:
-            return HttpResponseRedirect(reverse('flatmates:login'))
+            return render(request, self.template_name,{'form':form})
+
 
 
 '''

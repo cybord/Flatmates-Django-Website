@@ -2,19 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Register</title>
     <form action=" {% url 'flatmates:register' %}" method="post">
         {% csrf_token %}
-        Username:<br>
-        <input type="text" name="username"> <br>
-        Password:<br>
-        <input type="password" name="password"> <br>
-        Email:<br>
-        <input type="email" name="email"> <br>
-        Firstname:<br>
-        <input type="text" name="first_name"> <br>
-        Lastname:<br>
-        <input type="text" name="last_name"> <br>
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }}">Username</label><br>
+        {{ form.username }} <br>
+        {{ form.password.errors }}
+        <label for="{{ form.username.id_for_label }}">Password</label><br>
+        {{ form.password }} <br>
+        {{ form.email.errors }}
+        <label for="{{ form.username.id_for_label }}">Email</label><br>
+        {{ form.email }} <br>
+        {{ form.first_name.errors }}
+        <label for="{{ form.username.id_for_label }}">First name</label><br>
+        {{ form.first_name }} <br>
+        {{ form.last_name.errors }}
+        <label for="{{ form.username.id_for_label }}">Fast name</label><br>
+        {{ form.last_name }} <br>
+
         <input type="submit" value="register" />
         </form>
 </head>
