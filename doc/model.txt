@@ -1,0 +1,66 @@
+Model - All about database:
+
+Example:
+
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+
+Add the module containing model.py to INSTALLED_APPS to tell the django about the existence of your models. Run 'manage.py migrate' to create the tables for your model.
+
+SQL query generated for above model:
+
+CREATE TABLE myapp_person (
+    "id" serial NOT NULL PRIMARY KEY,
+    "first_name" varchar(30) NOT NULL,
+    "last_name" varchar(30) NOT NULL
+);
+
+To generate personalized Table name and other options, use meta options:
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+    def Meta:
+        ordering = ["first_name",c"[last_name]]
+        db_table = person
+
+class Jobs(models.Model):
+    employee = models.ForeignKey(Person, on_delete=models.cascade)
+    company = models.CharField(max_length=100)
+    join_date = models.DateField()
+    experience = models.IntegerField()
+
+ Other available fields:
+ BigIntegerField
+ BinaryField
+ BooleanField
+ CommaSeparatedIntegerField
+ DateTimeField
+ DecimalField
+ DurationField
+ EmailField
+ FileField
+    upload = models.FileField(upload_to='uploads/')
+ FloatField
+ ImageField
+ GenericIPAddressField
+ PositiveIntegerField
+ TextField
+ TimeField
+ URLField
+ ManytoManyField (same as ForeignKey except Many to One relationship)
+ OnetoOneField ( same as ForeignKey except Many to One relationship )
+
+ Field Options:
+ null: If True, Django will store empty values as NULL in the database. Default is False.
+ blank: If True, field is allowed to be blank or have data. Default is false. This option is validated-related unlike null which is purely database related. If false, it's required field. It's validation will be carried by form package.
+ choices: Tuple is used. It's helpful to store big data fields with small choices and retrieve the actual value using tuple.
+    Ex: L:Large, S:small. Only L and S will be stored in database.
+
+
+

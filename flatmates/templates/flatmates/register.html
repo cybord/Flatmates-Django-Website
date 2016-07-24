@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <form action=" {% url 'flatmates:register' %}" method="post">
+        {% csrf_token %}
+        Username:<br>
+        <input type="text" name="username"> <br>
+        Password:<br>
+        <input type="password" name="password"> <br>
+        Email:<br>
+        <input type="email" name="email"> <br>
+        Firstname:<br>
+        <input type="text" name="first_name"> <br>
+        Lastname:<br>
+        <input type="text" name="last_name"> <br>
+        <input type="submit" value="register" />
+        </form>
+</head>
+<body>
+
+</body>
+</html>
