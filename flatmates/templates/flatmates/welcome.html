@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-    {% {{welcome}} {{user}} %}
+     {{welcome}} {{user}} <br>
+    <a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> <br>
 </head>
 <body>
 

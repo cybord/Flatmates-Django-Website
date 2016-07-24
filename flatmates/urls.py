@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 app_name='flatmates'
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^login/$', views.login1, name='login'),
+    url(r'^register/$', views.Register.as_view(), name='register'),
+    url(r'^login/$', views.Login.as_view(), name='login'),
     url(r'^logout/$', views.logout1, name='logout'),
 ]
