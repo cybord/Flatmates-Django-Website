@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load i18n admin_static %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<title>{% block title %}Home{% endblock %}</title>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Flatmates</title>
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}" />
+    {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    {% load admin_urls admin_list %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {% block extrastyle %}
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+    {% endblock %}
+</head>
+
+<body>
     <a href="register">Register</a><br>
     <a href="login">Login</a> <br>
-</head>
-<body>
-
 </body>
 </html>

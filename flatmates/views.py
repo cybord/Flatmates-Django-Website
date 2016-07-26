@@ -8,7 +8,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django import forms
 from django.contrib.auth.models import User
-from .forms.user import UserForm
+from .forms.user import UserForm, ExpenseForm
+
+from .models import userProfile, Expenses
 
 
 # class Home(generic.DetailView):
@@ -45,6 +47,8 @@ class Register(generic.View):
                 user.first_name = form.cleaned_data['first_name']
                 user.last_name = form.cleaned_data['last_name']
                 user.save()
+                profile = userProfile(user_ID=user, joining_date=form.cleaned_data['joining_date'], company=form.cleaned_data['company'])
+                profile.save()
                 u = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
                 login(request, u)
                 return HttpResponseRedirect(reverse('flatmates:home'))
@@ -55,30 +59,26 @@ class Register(generic.View):
 
 
 
-'''
-def register(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('flatmates:home'))
-    else:
-        if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            try:
-                User.objects.get(username=username)
-            except User.DoesNotExist:
-                user = User.objects.create_user(request.POST['username'], request.POST['email'],
-                                                request.POST['password'])
-                user.first_name = request.POST['first_name']
-                user.last_name = request.POST['last_name']
-                user.save()
-                u = authenticate(username=request.POST['username'], password=request.POST['password'])
-                login(request, u)
-                return HttpResponse("Hi, " + u.username)
-            else:
-                return HttpResponseRedirect(reverse('flatmates:login'))
+class AddExpense(generic.View):
+    template_name = 'flatmates/add_expense.html'
+
+    def get(self,request):
+        if request.user.is_authenticated():
+            form=ExpenseForm()
+            return render(request, self.template_name, {'form': form})
         else:
-            return render(request, 'flatmates/register.html')
-'''
+            return HttpResponseRedirect(reverse('flatmates:home'))
+
+    def post(self,request):
+        form = ExpenseForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(username=request.user.username)
+            entry = Expenses.objects.create(id=None, user_name=user, expense=form.cleaned_data['expense'], spent_amount=form.cleaned_data['spent_amount'], description=form.cleaned_data['description'])
+            entry.save()
+            return HttpResponseRedirect(reverse('flatmates:home'))
+
+        else:
+            return render(request, self.template_name, {'form': form})
 
 class Login(generic.View):
     template_name = 'flatmates/login.html'

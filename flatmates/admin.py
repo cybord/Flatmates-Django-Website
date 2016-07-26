@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import userProfile, Expenses
+
+@admin.register(userProfile)
+class userProfileAdmin(admin.ModelAdmin):
+    list_display = ("full_name","email","joining_date","company")
+
+admin.site.register(Expenses)
+
+

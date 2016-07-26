@@ -1,5 +1,9 @@
 Model - All about database:
 
+python manage.py makemigrations flatmates
+python manage.py sqlmigrate flatmates 0001
+python manage.py migrate
+
 Example:
 
 from django.db import models
@@ -63,4 +67,24 @@ class Jobs(models.Model):
     Ex: L:Large, S:small. Only L and S will be stored in database.
 
 
+SQL query for userProfile Model:
+BEGIN;
+--
+-- Create model userProfile
+--
+CREATE TABLE "flatmates_userprofile" ("user_ID_id" integer NOT NULL PRIMARY KEY, "joining_date" date NOT NULL, "company" varchar(100) NOT NULL);
+ALTER TABLE "flatmates_userprofile" ADD CONSTRAINT "flatmates_userprofile_user_ID_id_1b3f1300_fk_auth_user_id" FOREIGN KEY ("user_ID_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
 
+COMMIT;
+
+SQL query for Expenses:
+
+BEGIN;
+--
+-- Create model Expenses
+--
+CREATE TABLE "flatmates_expenses" ("id" serial NOT NULL PRIMARY KEY, "expense" varchar(100) NOT NULL, "spent_amount" integer NOT NULL, "spent_date" date NOT NULL, "description" text NOT NULL, "user_id_id" integer NOT NULL);
+ALTER TABLE "flatmates_expenses" ADD CONSTRAINT "flatmates_expenses_user_id_id_86d3e975_fk_auth_user_id" FOREIGN KEY ("user_id_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "flatmates_expenses_18624dd3" ON "flatmates_expenses" ("user_id_id");
+
+COMMIT;
