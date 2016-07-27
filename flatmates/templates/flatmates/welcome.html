@@ -1,24 +1,80 @@
 <!DOCTYPE html>
-{% load i18n admin_static %}
-{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
-<title>{% block title %}Welcome{% endblock %}</title>
+<html lang=en"
+{% load staticfiles %}
 
 <head>
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}" />
-    {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
-    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
-    {% load admin_urls admin_list %}
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-    {% block extrastyle %}
-        <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
-        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
-    {% endblock %}
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+     <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}">
 </head>
 
+
 <body>
-     {{welcome}} {{user}} <br>
-     <a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> <br>
-    <a href="{% url 'flatmates:add' %}" method="POST"> Add a entry </a> <br>
+     <div style="width:400px; margin-right:auto; margin-left:auto;"> </div>
+        <h3> Hi, {{user}} </h3>
+         <h3><a href="{% url 'flatmates:add' %}" method="POST"> Add a entry </a> </h3>
+          <h3><a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a> </h3>
+          <h3><a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> </h3>
+
+
+<h3> Last five entries done:</h3>
+<table width="100%" border="1">
+
+<tr>
+
+    <th style="width: 20px">Full Name</th>
+    <th style="width: 20px">expense</th>
+    <th style="width: 20px">Amount</th>
+    <th style="width: 20px">Description</th>
+</tr>
+
+   {% for item in expenses %}
+
+    <tr>
+        <td style="width: 20px">{{ item.full_name }}</td>
+        <td style="width: 20px">{{ item.expense }}</td>
+        <td style="width: 20px">{{ item.spent_amount }}</td>
+        <td style="width: 20px"> {{ item.description }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+     <br>
+
+     <h3 style="display:inline-block;  width:350px;" > Amount Spent by you:  </h3>
+    <h3 style="display:inline-block; width:100px;" id="pid"></h3>
+<br>
+      <h3 style="display:inline-block;  width:350px;" > Amount Spent by all:  </h3>
+    <h3 style="display:inline-block; width:100px;" id="pid1"></h3>
+
+     <br>
+      <h3 style="display:inline-block;  width:350px;" > Amount per Head:  </h3>
+    <h3 style="display:inline-block; width:100px;" id="pid2"></h3>
+
+          <br>
+      <h3 style="display:inline-block;  width:350px;" > Net Amount to be paid by you:  </h3>
+    <h3 style="display:inline-block; width:100px;" id="pid3"></h3>
+
+
+
+<script type="text/javascript">
+    var sum = 0;
+    var you = 0;
+    {% for item in all_expenses %}
+        {% if item.full_name == user %}
+        you = you + {{ item.spent_amount }}
+        {% endif %}
+        sum = sum + {{ item.spent_amount }}
+     {% endfor %}
+     var count = 0;
+     {% for user in all_users %}
+        count += 1
+      {% endfor %}
+
+     document.getElementById("pid").innerHTML = you;
+     document.getElementById("pid1").innerHTML = sum;
+     document.getElementById("pid2").innerHTML = sum/count;
+     document.getElementById("pid3").innerHTML = sum/count - you;
+
+</script>
 </body>
 </html>

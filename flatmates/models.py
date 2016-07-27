@@ -22,7 +22,7 @@ class Expenses(models.Model):
 
     spent_amount = models.IntegerField(default=0)
     spent_date = models.DateTimeField(auto_now=True)
-    description = models.TextField(max_length=300,default = "Enter a description if necessary!")
+    description = models.TextField(max_length=300,default = "self Explainable!!")
 
     def __str__(self):
         return self.user_name.username

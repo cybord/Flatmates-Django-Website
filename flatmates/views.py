@@ -9,7 +9,7 @@ from django.utils import timezone
 from django import forms
 from django.contrib.auth.models import User
 from .forms.user import UserForm, ExpenseForm
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import userProfile, Expenses
 
 
@@ -17,9 +17,15 @@ from .models import userProfile, Expenses
 
 def home(request):
     if request.user.is_authenticated():
+        expenses = Expenses.objects.all().order_by('-spent_date')[:5]
+        all_expenses = Expenses.objects.all()
+        all_users = User.objects.all()
+
         return render(request, 'flatmates/welcome.html', {
-            'user': request.user.username,
-            'welcome': "Hi, ",})
+            'user': User.objects.get(username=request.user.username).userprofile.full_name,
+            'expenses': expenses,
+            'all_expenses': all_expenses,
+            'all_users':all_users,})
     else:
         return render(request, 'flatmates/home.html', )
 
@@ -99,25 +105,15 @@ class Login(generic.View):
             return HttpResponseRedirect(reverse('flatmates:home'))
         else:
             return HttpResponseRedirect(reverse('flatmates:register'))
-'''
-def login1(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            greeting = "Hi, " + user.first_name + " " + user.last_name
-            return HttpResponse("Hi, " + username)
-        else:
-            return HttpResponseRedirect(reverse('flatmates:register'))
-    else:
-        if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('flatmates:home'))
 
-        else:
-            return render(request, 'flatmates/login.html')
-'''
+
+class ViewExpense(LoginRequiredMixin, generic.ListView):
+    login_url = 'flatmates:login'
+    template_name = 'flatmates/view_expense.html'
+    context_object_name = 'expenses'
+
+    def get_queryset(self):
+        return Expenses.objects.all().order_by('-spent_date')
 
 def logout1(request):
     logout(request)

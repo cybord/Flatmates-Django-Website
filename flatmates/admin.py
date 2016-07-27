@@ -6,6 +6,9 @@ from .models import userProfile, Expenses
 class userProfileAdmin(admin.ModelAdmin):
     list_display = ("full_name","email","joining_date","company")
 
-admin.site.register(Expenses)
+@admin.register(Expenses)
+class ExpensesAdmin(admin.ModelAdmin):
+    list_display = ("full_name","expense","spent_amount","spent_date","description")
+
 
 

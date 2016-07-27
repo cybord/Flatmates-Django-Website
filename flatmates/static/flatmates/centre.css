@@ -1,0 +1,23 @@
+   body
+{
+    background-color : white;
+    align:"center";
+}
+h2
+{
+    color : #000000;
+    text-align : center;
+    font-family: "SIMPSON";
+}
+form
+{
+    align:"center";
+}
+
+h3
+{
+    display:inline-block;
+}
+
+element1 {display:inline-block;margin-right:10px; width:200px; background-color:red;}
+element2 {display:inline-block; width:200px; background-color:red;}
