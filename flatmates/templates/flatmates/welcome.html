@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends "flatmates/base.html" %}
+
+{% block origin %}
 <html lang=en"
 {% load staticfiles %}
 
@@ -11,10 +14,10 @@
 
 <body>
      <div style="width:400px; margin-right:auto; margin-left:auto;"> </div>
-        <h3> Hi, {{user}} </h3>
-         <h3><a href="{% url 'flatmates:add' %}" method="POST"> Add a entry </a> </h3>
-          <h3><a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a> </h3>
-          <h3><a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> </h3>
+        <h3> Hi, {{user}} </h3> <br>
+         <h3><a href="{% url 'flatmates:add' %}" method="POST"> Add a entry </a> </h3><br>
+          <h3><a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a> </h3><br>
+          <h3><a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> </h3><br>
 
 
 <h3> Last five entries done:</h3>
@@ -78,3 +81,4 @@
 </script>
 </body>
 </html>
+{% endblock %}
