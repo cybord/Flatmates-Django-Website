@@ -22,7 +22,7 @@
 </div>
 
 <div id="nav">
-<a href="{% url 'flatmates:add' %}" > Add a entry</a>
+<a href="{% url 'flatmates:add' %}" > Add Entry</a>
 <a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a>
 </div>
 
@@ -46,42 +46,48 @@
     </tr>
     {% endfor %}
 </table>
-<br>
 
-<h3 style="display:inline-block;  width:350px;" > Amount Spent by you:  </h3>
-<h3 style="display:inline-block; width:100px;" id="pid"></h3>
-<br>
-<h3 style="display:inline-block;  width:350px;" > Amount Spent by all:  </h3>
-<h3 style="display:inline-block; width:100px;" id="pid1"></h3>
+<div class="theForm">
+    <div class="row">
+        <h3> Spent by you:</h3>
+        <h3 id="id1"></h3>
+    </div>
 
-<br>
-<h3 style="display:inline-block;  width:350px;" > Amount per Head:  </h3>
-<h3 style="display:inline-block; width:100px;" id="pid2"></h3>
+    <div class="row">
+        <h3> Spent by all:</h3>
+        <h3 id="id2"></h3>
+    </div>
 
-<br>
-<h3 style="display:inline-block;  width:350px;" > Net Amount to be paid by you:  </h3>
-<h3 style="display:inline-block; width:100px;" id="pid3"></h3>
+    <div class="row">
+        <h3> Amount per Head:</h3>
+        <h3 id="id3"></h3>
+    </div>
 
+    <div class="row">
+        <h3>To be paid by you:</h3>
+        <h3 id="id4"></h3>
+    </div>
 
+</div>
 
 <script type="text/javascript">
     var sum = 0;
     var you = 0;
     {% for item in all_expenses %}
         {% if item.full_name == user %}
-        you = you + {{ item.spent_amount }}
+            you = you + {{ item.spent_amount }}
         {% endif %}
         sum = sum + {{ item.spent_amount }}
-     {% endfor %}
+    {% endfor %}
      var count = 0;
-     {% for user in all_users %}
+    {% for user in all_users %}
         count += 1
-      {% endfor %}
+    {% endfor %}
 
-     document.getElementById("pid").innerHTML = you;
-     document.getElementById("pid1").innerHTML = sum;
-     document.getElementById("pid2").innerHTML = sum/count;
-     document.getElementById("pid3").innerHTML = sum/count - you;
+     document.getElementById("id1").innerHTML = you;
+     document.getElementById("id2").innerHTML = sum;
+     document.getElementById("id3").innerHTML = sum/count;
+     document.getElementById("id4").innerHTML = sum/count - you;
 
 </script>
 {% endblock %}
