@@ -1,3 +1,4 @@
+import datetime
 from django.http import Http404
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
@@ -8,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django import forms
 from django.contrib.auth.models import User
-from .forms.user import UserForm, ExpenseForm
+from .forms.user import RegisterForm, ExpenseForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import userProfile, Expenses
 
@@ -17,15 +18,22 @@ from .models import userProfile, Expenses
 
 def home(request):
     if request.user.is_authenticated():
-        expenses = Expenses.objects.all().order_by('-spent_date')[:5]
-        all_expenses = Expenses.objects.all()
+        current = (str(timezone.now()))
+        date,time = current.split(None,2)
+        days = int(date.split("-",3)[2])
+        hour,min,sec = (time.split(":",3))
+        sec = int(sec.split(".",1)[0])
+        month_start_date = timezone.now() - datetime.timedelta(days=days-1,hours=int(hour),minutes=int(min),seconds=int(sec))
+
+        expenses = Expenses.objects.filter(spent_date__gte=month_start_date).order_by('-spent_date')[:5]
+        all_expenses = Expenses.objects.filter(spent_date__gte=month_start_date)
         all_users = User.objects.all()
 
         return render(request, 'flatmates/welcome.html', {
             'user': User.objects.get(username=request.user.username).userprofile.full_name,
             'expenses': expenses,
             'all_expenses': all_expenses,
-            'all_users':all_users,})
+            'all_users':all_users, 'zone':month_start_date})
     else:
         return render(request, 'flatmates/home.html', )
 
@@ -37,13 +45,13 @@ class Register(generic.View):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('flatmates:home'))
         else:
-            form = UserForm()
+            form = RegisterForm()
             return render(request, self.template_name, {'form':form})
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('flatmates:home'))
-        form = UserForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             try:
                 User.objects.get(username = form.cleaned_data['username'])
@@ -71,7 +79,7 @@ class AddExpense(generic.View):
     def get(self,request):
         if request.user.is_authenticated():
             form=ExpenseForm()
-            return render(request, self.template_name, {'form': form})
+            return render(request, self.template_name, {'form': form, })
         else:
             return HttpResponseRedirect(reverse('flatmates:home'))
 
@@ -94,6 +102,7 @@ class Login(generic.View):
             return HttpResponseRedirect(reverse('flatmates:home'))
 
         else:
+
             return render(request, self.template_name)
 
     def post(self,request):
@@ -104,8 +113,7 @@ class Login(generic.View):
             login(request, user)
             return HttpResponseRedirect(reverse('flatmates:home'))
         else:
-            return HttpResponseRedirect(reverse('flatmates:register'))
-
+            return HttpResponseRedirect(reverse('flatmates:login'))
 
 class ViewExpense(LoginRequiredMixin, generic.ListView):
     login_url = 'flatmates:login'
@@ -113,7 +121,14 @@ class ViewExpense(LoginRequiredMixin, generic.ListView):
     context_object_name = 'expenses'
 
     def get_queryset(self):
-        return Expenses.objects.all().order_by('-spent_date')
+        current = (str(timezone.now()))
+        date,time = current.split(None,2)
+        days = int(date.split("-",3)[2])
+        hour,min,sec = (time.split(":",3))
+        sec = int(sec.split(".",1)[0])
+        month_start_date = timezone.now() - datetime.timedelta(days=days-1,hours=int(hour),minutes=int(min),seconds=int(sec))
+
+        return Expenses.objects.filter(spent_date__gte=month_start_date).order_by('-spent_date')
 
 def logout1(request):
     logout(request)

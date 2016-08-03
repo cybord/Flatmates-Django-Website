@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 class userProfile(models.Model):
     user_ID = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    joining_date = models.DateField()
+    joining_date = models.DateTimeField()
     company = models.CharField(max_length=100)
 
     def __str__(self):

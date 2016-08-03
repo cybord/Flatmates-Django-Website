@@ -1,43 +1,96 @@
 <!DOCTYPE html>
-<html lang=en"
-{% load staticfiles %}
+{% extends "flatmates/home.html" %}
+
 
 <head>
-    <meta charset="UTF-8">
     <title>Welcome</title>
-     <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}">
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
+    <title>Register</title>
+    {% endblock %}
+    {% endblock %}
+
+
 </head>
 
 <body>
-<h3>
-     <div style="width:400px; margin-right:auto; margin-left:auto;">
-    <form action=" {% url 'flatmates:register' %}" method="post">
-        {% csrf_token %}
-        {{ form.username.errors }}
-        <label for="{{ form.username.id_for_label }}">Username</label><br>
-        {{ form.username }} <br>
-        {{ form.password.errors }}
-        <label for="{{ form.username.id_for_label }}">Password</label><br>
-        {{ form.password }} <br>
-        {{ form.email.errors }}
-        <label for="{{ form.username.id_for_label }}">Email</label><br>
-        {{ form.email }} <br>
-        {{ form.first_name.errors }}
-        <label for="{{ form.username.id_for_label }}">First name</label><br>
-        {{ form.first_name }} <br>
-        {{ form.last_name.errors }}
-        <label for="{{ form.username.id_for_label }}">Last name</label><br>
-        {{ form.last_name }} <br>
-        {{ form.joining_date.errors }}
-        <label for="{{ form.joining_date.id_for_label }}">Joining Date</label><br>
-        {{ form.joining_date }} <br>
-        {{ form.company.errors }}
-        <label for="{{ form.company.id_for_label }}">Company</label><br>
-        {{ form.company }} <br>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block nav_anon %}
+{{ block.super }}
+{% endblock %}
 
-        <input type="submit" value="register" />
-        </form>
-         </div>
-    </h3>
+<form id="theForm" action=" {% url 'flatmates:register' %}" method="post">
+    {% csrf_token %}
+
+    <div class="row">
+        <label></label>
+        {{ form.username.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }} <br>
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.password.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.password.id_for_label }}">Password:</label>
+        {{ form.password }}<br>
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.email.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.first_name.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.first_name.id_for_label }}">First name:</label>
+        {{ form.first_name }}
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.last_name.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.last_name.id_for_label }}">Last name:</label>
+        {{ form.last_name }}
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.joining_date.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.joining_date.id_for_label }}">Joining Date:</label>
+        {{ form.joining_date }}
+    </div>
+
+    <div class="row">
+        <label></label>
+        {{ form.company.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.company.id_for_label }}">Company:</label>
+        {{ form.company }}
+    </div>
+
+    <input type="submit" value="register" />
+</form>
+{% endblock %}
 </body>
 </html>

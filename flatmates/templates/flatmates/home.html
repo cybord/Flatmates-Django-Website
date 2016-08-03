@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<html lang=en"
-{% load staticfiles %}
+{% extends "flatmates/base.html" %}
 
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-     <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}">
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
+    <title>Home</title>
+    {% endblock %}
+    {% endblock %}
+
 </head>
 
 <body>
-<h3>
-     <div style="width:400px; margin-right:auto; margin-left:auto;">
-    <a href="register">Register</a><br>
-    <a href="login">Login</a> <br>
-         </div>
-    </h3>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block nav_anon %}
+ <div id="nav">
+        <a href="{% url 'flatmates:register' %}">Register</a>
+        <a href="{% url 'flatmates:login' %}">Login</a> <br>
+ </div>
+{% endblock %}
+
+{% endblock %}
 </body>
 </html>

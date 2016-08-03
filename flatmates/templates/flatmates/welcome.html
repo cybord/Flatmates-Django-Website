@@ -1,61 +1,66 @@
-<!DOCTYPE html>
 {% extends "flatmates/base.html" %}
-
-{% block origin %}
-<html lang=en"
-{% load staticfiles %}
-
 <head>
-    <meta charset="UTF-8">
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
     <title>Welcome</title>
-     <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}">
+    {% endblock %}
+    {% endblock %}
 </head>
 
 
 <body>
-     <div style="width:400px; margin-right:auto; margin-left:auto;"> </div>
-        <h3> Hi, {{user}} </h3> <br>
-         <h3><a href="{% url 'flatmates:add' %}" method="POST"> Add a entry </a> </h3><br>
-          <h3><a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a> </h3><br>
-          <h3><a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a> </h3><br>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block login_info %}
 
+<div id="user-tools">
+    Hi, <strong>{{user}} </strong>
+    <a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a>
+</div>
 
+<div id="nav">
+<a href="{% url 'flatmates:add' %}" > Add a entry</a>
+<a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a>
+</div>
+
+{% endblock %}
 <h3> Last five entries done:</h3>
-<table width="100%" border="1">
-
-<tr>
-
-    <th style="width: 20px">Full Name</th>
-    <th style="width: 20px">expense</th>
-    <th style="width: 20px">Amount</th>
-    <th style="width: 20px">Description</th>
-</tr>
-
-   {% for item in expenses %}
-
+<table width="100%" border="1" align="right">
     <tr>
-        <td style="width: 20px">{{ item.full_name }}</td>
-        <td style="width: 20px">{{ item.expense }}</td>
-        <td style="width: 20px">{{ item.spent_amount }}</td>
-        <td style="width: 20px"> {{ item.description }}</td>
+        <th style="width: 20px text-align:left ">Paid By</th>
+        <th style="width: 20px text-align:left">Spent On</th>
+        <th style="width: 20px text-align:left">Amount paid</th>
+        <th style="width: 20px text-align:left">Spent date</th>
+        <th style="width: 20px text-align:left">Description</th>
+    </tr>
+    {% for item in expenses %}
+    <tr>
+        <td style="width: 20px text-align:left">{{ item.full_name }}</td>
+        <td style="width: 20px text-align:left">{{ item.expense }}</td>
+        <td style="width: 20px text-align:left">{{ item.spent_amount }}</td>
+        <td style="width: 20px text-align:left">{{ item.spent_date }}</td>
+        <td style="width: 20px text-align:left"> {{ item.description }}</td>
     </tr>
     {% endfor %}
-    </table>
-     <br>
-
-     <h3 style="display:inline-block;  width:350px;" > Amount Spent by you:  </h3>
-    <h3 style="display:inline-block; width:100px;" id="pid"></h3>
+</table>
 <br>
-      <h3 style="display:inline-block;  width:350px;" > Amount Spent by all:  </h3>
-    <h3 style="display:inline-block; width:100px;" id="pid1"></h3>
 
-     <br>
-      <h3 style="display:inline-block;  width:350px;" > Amount per Head:  </h3>
-    <h3 style="display:inline-block; width:100px;" id="pid2"></h3>
+<h3 style="display:inline-block;  width:350px;" > Amount Spent by you:  </h3>
+<h3 style="display:inline-block; width:100px;" id="pid"></h3>
+<br>
+<h3 style="display:inline-block;  width:350px;" > Amount Spent by all:  </h3>
+<h3 style="display:inline-block; width:100px;" id="pid1"></h3>
 
-          <br>
-      <h3 style="display:inline-block;  width:350px;" > Net Amount to be paid by you:  </h3>
-    <h3 style="display:inline-block; width:100px;" id="pid3"></h3>
+<br>
+<h3 style="display:inline-block;  width:350px;" > Amount per Head:  </h3>
+<h3 style="display:inline-block; width:100px;" id="pid2"></h3>
+
+<br>
+<h3 style="display:inline-block;  width:350px;" > Net Amount to be paid by you:  </h3>
+<h3 style="display:inline-block; width:100px;" id="pid3"></h3>
 
 
 
@@ -79,6 +84,6 @@
      document.getElementById("pid3").innerHTML = sum/count - you;
 
 </script>
+{% endblock %}
 </body>
 </html>
-{% endblock %}

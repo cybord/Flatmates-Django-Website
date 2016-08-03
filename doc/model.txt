@@ -88,3 +88,6 @@ ALTER TABLE "flatmates_expenses" ADD CONSTRAINT "flatmates_expenses_user_id_id_8
 CREATE INDEX "flatmates_expenses_18624dd3" ON "flatmates_expenses" ("user_id_id");
 
 COMMIT;
+
+
+ <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}" />
