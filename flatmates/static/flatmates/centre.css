@@ -19,10 +19,10 @@ a.tittle{
 #nav {
     height:30px;
     margin-top: 10px;
-    background-color: 	#90EE90;
+    background-color: #585858 ;
 }
 #nav a{
-    color: black;
+    color: white;
     text-decoration: none;
     font-size: 18px;
     padding-top: 5px;
@@ -34,10 +34,11 @@ a.tittle{
 
     border-bottom: transparent;
     display:inline-block;
+    text-align: center:
 }
 #nav a:hover{
     color: white;
-    background-color: green;
+    background-color: black;
 }
 h3{
     font-size: 20px;
@@ -45,27 +46,81 @@ h3{
 #theForm{
     display: table;
     border-collapse:separate;
-    border-spacing:10px;
+    border-spacing: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 .row{
     display: table-row;
-    margin: 5px;
+    margin: 0px;
+
 }
 
 .row label{
     display: table-cell;
     padding: 2px;
-    text-align: right;
+    font-weight: bold;
+    height:30px;
+
 }
 ul, ul li{
+    color: red;
     padding: 0;
 }
+.row p{
+    display: table-cell;
+}
 
- .row input{
+ .row input, .row select{
     display: table-cell;
     padding: 2px;
+    height: 30px;
  }
+
+ ul.messages li.success,  ul.messages li.info{
+    color: green;
+ }
+
+  ul.messages li.warning,  ul.messages li.error{
+    color: red;
+ }
+
+ .submit {
+     background-color: #585858 ;
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 100px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+ .multisubmit {
+     background-color: #585858 ;
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+select, input[type=text] , input[type=password], input[type=email], input[type=number]{
+    border: 1.5px solid #585858;
+    border-radius: 4px;
+}
 
 .row h3{
     text-align: left;
@@ -74,22 +129,32 @@ ul, ul li{
  }
 
 table {
-    width: 50%;
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
-    float: left;
 
 }
 
 th {
-    background-color: #87CEBB;
-    color: black;
+    background-color: #585858 ;
+    color: white;
 }
 
 td, th {
     border: 1px solid #000000;
     text-align: left;
     padding: 10px;
+}
+
+#left{
+    width: 48%;
+    float:left;
+    display: inline-block;
+}
+#right{
+    width: 48%;
+    float:right;
+    display: inline;
 }
 
 tr:nth-child(even) {

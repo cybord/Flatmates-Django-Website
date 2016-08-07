@@ -23,11 +23,15 @@
 {{ block.super }}
 {% endblock %}
 
-<form id="theForm" action=" {% url 'flatmates:register' %}" method="post">
-    {% csrf_token %}
+{% block messages %}
+{{ block.super }}
+{% endblock %}
 
+<form action=" {% url 'flatmates:register' %}" method="post">
+    {% csrf_token %}
+<div id="theForm">
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.username.errors }}
     </div>
     <div class="row">
@@ -36,7 +40,7 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.password.errors }}
     </div>
     <div class="row">
@@ -45,7 +49,7 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.email.errors }}
     </div>
     <div class="row">
@@ -54,7 +58,7 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.first_name.errors }}
     </div>
     <div class="row">
@@ -63,7 +67,7 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.last_name.errors }}
     </div>
     <div class="row">
@@ -72,7 +76,7 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.joining_date.errors }}
     </div>
     <div class="row">
@@ -81,15 +85,15 @@
     </div>
 
     <div class="row">
-        <label></label>
+        <p></p>
         {{ form.company.errors }}
     </div>
     <div class="row">
         <label for="{{ form.company.id_for_label }}">Company:</label>
         {{ form.company }}
     </div>
-
-    <input type="submit" value="register" />
+</div>
+    <input type="submit" class="submit" value="register" />
 </form>
 {% endblock %}
 </body>

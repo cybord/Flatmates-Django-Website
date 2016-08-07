@@ -10,6 +10,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
 
 class RegisterForm(forms.Form):
+    class Meta:
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
     username = forms.CharField(label='Username', max_length=100,validators=[alpha])
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
     email = forms.EmailField(label='Email')
@@ -24,4 +28,8 @@ class ExpenseForm(forms.Form):
     spent_amount = forms.IntegerField()
     description = forms.CharField(required=False)
 
+class ChangePasswordForm(forms.Form):
 
+    current_password = forms.CharField(label='Current Password', widget=forms.PasswordInput())
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput())

@@ -19,8 +19,14 @@
    {{ block.super }}
 {% endblock %}
 
-    <form id="theForm" action="{% url 'flatmates:login' %}" method="post">
+{% block messages %}
+{{ block.super }}
+{% endblock %}
+
+    <form action="{% url 'flatmates:login' %}" method="post">
         {% csrf_token %}
+
+        <div id="theForm" >
         <div class="row">
         <label for="username">Username:</label>
         <input type="text" name="username">
@@ -30,7 +36,9 @@
         <label for="password">Password:</label>
         <input type="password" name="password">
         </div>
-        <input type="submit" value="Login">
+        <input type="hidden" name="next" value="{{ next }}">
+        </div>
+        <input type="submit" class="submit" value="Login">
     </form>
 
 

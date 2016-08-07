@@ -14,82 +14,74 @@
 {% block logo %}
 {{ block.super }}
 {% endblock %}
+
 {% block login_info %}
 
 <div id="user-tools">
-    Hi, <strong>{{user}} </strong>
+    Hi, <a href="{% url 'flatmates:profile' %}" method="GET" style="color: black">{{user}} </a>
     <a href="{% url 'flatmates:logout' %}" method="POST"> Logout </a>
 </div>
 
 <div id="nav">
-<a href="{% url 'flatmates:add' %}" > Add Entry</a>
-<a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a>
+    <a href="{% url 'flatmates:add' %}" > Add Entry</a>
+    <a href="{% url 'flatmates:view' %}" method="POST"> View All Entries </a>
+    <a href="{% url 'flatmates:edit' %}" method="POST"> Edit Entry</a>
+        <a href="{% url 'flatmates:profile' %}" > View Profile</a>
+    <a href="{% url 'flatmates:change_password' %}" method="POST"> Change Password </a>
 </div>
 
 {% endblock %}
-<h3> Last five entries done:</h3>
-<table width="100%" border="1" align="right">
-    <tr>
-        <th style="width: 20px text-align:left ">Paid By</th>
-        <th style="width: 20px text-align:left">Spent On</th>
-        <th style="width: 20px text-align:left">Amount paid</th>
-        <th style="width: 20px text-align:left">Spent date</th>
-        <th style="width: 20px text-align:left">Description</th>
-    </tr>
-    {% for item in expenses %}
-    <tr>
-        <td style="width: 20px text-align:left">{{ item.full_name }}</td>
-        <td style="width: 20px text-align:left">{{ item.expense }}</td>
-        <td style="width: 20px text-align:left">{{ item.spent_amount }}</td>
-        <td style="width: 20px text-align:left">{{ item.spent_date }}</td>
-        <td style="width: 20px text-align:left"> {{ item.description }}</td>
-    </tr>
-    {% endfor %}
-</table>
 
-<div class="theForm">
-    <div class="row">
-        <h3> Spent by you:</h3>
-        <h3 id="id1"></h3>
-    </div>
+{% block messages %}
+{{ block.super }}
+{% endblock %}
 
-    <div class="row">
-        <h3> Spent by all:</h3>
-        <h3 id="id2"></h3>
-    </div>
+<div id="left">
+    <h3>Summary:</h3>
+    <table>
 
-    <div class="row">
-        <h3> Amount per Head:</h3>
-        <h3 id="id3"></h3>
-    </div>
+        <tr>
+            <th> Full name </th>
+            <th> Total spent</th>
+            <th> Total Spent by all</th>
+            <th> Amount per Head</th>
+            <th>To be paid</th>
+        </tr>
+        {% for  name, spent_amount, to_be_paid, spent_per_head in  list %}
 
-    <div class="row">
-        <h3>To be paid by you:</h3>
-        <h3 id="id4"></h3>
-    </div>
-
+        <tr>
+            <td id="id1"> {{ name }}</td>
+            <td id="id2">{{ spent_amount }}</td>
+            <td id="id3"> {{ total }}</td>
+            <td id="id4"> {{ spent_per_head }}</td>
+            <td>{{ to_be_paid }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 
-<script type="text/javascript">
-    var sum = 0;
-    var you = 0;
-    {% for item in all_expenses %}
-        {% if item.full_name == user %}
-            you = you + {{ item.spent_amount }}
-        {% endif %}
-        sum = sum + {{ item.spent_amount }}
-    {% endfor %}
-     var count = 0;
-    {% for user in all_users %}
-        count += 1
-    {% endfor %}
+<div id="right">
+    <h3> Last five entries done:</h3>
 
-     document.getElementById("id1").innerHTML = you;
-     document.getElementById("id2").innerHTML = sum;
-     document.getElementById("id3").innerHTML = sum/count;
-     document.getElementById("id4").innerHTML = sum/count - you;
+    <table>
+        <tr>
+            <th>Paid By</th>
+            <th>Spent On</th>
+            <th>Amount paid</th>
+            <th>Spent date</th>
+        </tr>
+        {% for item in expenses %}
+        <tr>
+            <td>{{ item.full_name }}</td>
+            <td>{{ item.expense }}</td>
+            <td>{{ item.spent_amount }}</td>
+            <td>{{ item.spent_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-</script>
+
 {% endblock %}
 </body>
 </html>
