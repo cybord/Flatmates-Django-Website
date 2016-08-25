@@ -1,3 +1,3 @@
 # flatmates
 
-Website designed to help the flatmates, claclulate their monthly expenses.
+Website designed to help the flatmates, calculate their monthly expenses.
