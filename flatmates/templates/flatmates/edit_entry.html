@@ -1,0 +1,30 @@
+{% extends "flatmates/welcome.html" %}
+<head>
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
+    <title>Profile</title>
+    {% endblock %}
+    {% endblock %}
+</head>
+
+
+<body>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block login_info %}
+{{ block.super }}
+{% endblock %}
+
+{% block messages %}
+{{ block.super }}
+{% endblock %}
+
+<h3>Comming Soon</h3>
+
+{% endblock %}
+</body>
+
+</html>

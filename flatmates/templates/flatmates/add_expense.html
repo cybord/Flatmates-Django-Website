@@ -1,0 +1,67 @@
+{% extends "flatmates/welcome.html" %}
+<head>
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
+    <title>Add Expense</title>
+    {% endblock %}
+    {% endblock %}
+</head>
+
+
+<body>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block login_info %}
+{{ block.super }}
+{% endblock %}
+{% block messages %}
+{{ block.super }}
+{% endblock %}
+<h3> Add your new expense entry:</h3>
+
+<form  action=" {% url 'flatmates:add' %}" method="post">
+    <div id="theForm">
+    {% csrf_token %}
+
+    <div class="row">
+        <p></p>
+        {{ form.expense.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.expense.id_for_label }}">Expense on:</label>
+        {{ form.expense }}
+    </div>
+
+    <div class="row">
+        <p></p>
+        {{ form.spent_amount.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.spent_amount.id_for_label }}">Spent Amount:</label>
+        {{ form.spent_amount }}
+
+    </div>
+
+    <div class="row">
+        <p></p>
+        {{ form.description.errors }}
+    </div>
+    <div class="row">
+        <label for="{{ form.username.id_for_label }}">Description:</label>
+        {{ form.description }}
+    </div>
+        </div>
+
+
+    <input type="submit" class="multisubmit" value="Save and continue" name="submit1" />
+
+    <input type="submit" class="multisubmit" value="Save and Add another entry" name="submit2" />
+
+</form>
+
+{% endblock %}
+</body>
+</html>

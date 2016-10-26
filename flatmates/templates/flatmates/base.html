@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head_content %}
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel = "stylesheet" type="text/css" href="{% static 'flatmates/centre.css' %}">
+    {% endblock %}
+</head>
+<body>
+{% block body_content %}
+{% block logo %}
+<a  href="{% url 'flatmates:home' %}" class="tittle"> <img src="{% static 'flatmates/images/flatmates-logo.png' %}" alt="Flatmates" /></a>
+{% endblock %}
+
+{% block messages %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+{% endblock %}
+
+</body>
+
+</html>

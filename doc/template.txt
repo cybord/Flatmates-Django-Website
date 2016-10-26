@@ -1,0 +1,4 @@
+
+dictionary and list can be accessed using dot operator. No multiple dot operators are allowed.
+dict.key     - Yes
+dict.key.idx - No

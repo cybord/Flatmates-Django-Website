@@ -1,0 +1,52 @@
+{% extends "flatmates/welcome.html" %}
+<head>
+    {% block head_content %}
+    {{ block.super }}
+    {% block tittle %}
+    <title>View Expense</title>
+    {% endblock %}
+    {% endblock %}
+</head>
+
+
+<body>
+{% block body_content %}
+{% block logo %}
+{{ block.super }}
+{% endblock %}
+{% block login_info %}
+{{ block.super }}
+{% endblock %}
+
+{% block messages %}
+{{ block.super }}
+{% endblock %}
+
+<br>
+
+<h3>All entries made in this month:</h3>
+<table width="100%" border="1">
+
+<tr>
+
+    <th style="width: 20px">Full Name</th>
+    <th style="width: 20px">expense on</th>
+    <th style="width: 20px">Amount</th>
+    <th style="width: 20px">Spent Date</th>
+    <th style="width: 20px">Description</th>
+</tr>
+
+   {% for item in expenses %}
+    <tr>
+        <td style="width: 20px">{{ item.full_name }}</td>
+        <td style="width: 20px">{{ item.expense }}</td>
+        <td style="width: 20px">{{ item.spent_amount }}</td>
+        <td style="width: 20px">{{ item.spent_date }}</td>
+        <td style="width: 20px"> {{ item.description }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
+</body>
+</html>
