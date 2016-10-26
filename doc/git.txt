@@ -1,0 +1,7 @@
+
+
+To Update repo with new files, deleted files and modified files:
+git add -A
+
+to commit:
+git commit -m "message about changes"
