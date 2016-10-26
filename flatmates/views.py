@@ -96,7 +96,7 @@ class Login(generic.View):
             messages.warning(request, "Please enter correct username and Password")
             return HttpResponseRedirect(reverse('flatmates:login'))
 
-def logout1(request):
+def my_logout(request):
     logout(request)
     messages.success(request, "You are logged out successfully.")
     return HttpResponseRedirect(reverse('flatmates:home'))
@@ -148,7 +148,6 @@ class ChangePassword(LoginRequiredMixin, generic.View):
 
 def change_password(request):
     template_response = views.password_change(request)
-    # Do something with `template_response`
     return template_response
 
 class AddExpense(LoginRequiredMixin, generic.View):

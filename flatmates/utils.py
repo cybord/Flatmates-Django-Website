@@ -31,6 +31,7 @@ class OptionalChoiceField(forms.MultiValueField):
 
 
 def calculate():
+    rent_amount = 30000
     today = datetime.date.today()
     all_users = User.objects.filter(userprofile__joining_date__year__lte=today.year, userprofile__joining_date__month__lte=today.month).order_by('-userprofile__joining_date')
     users_count = len(all_users)
@@ -54,7 +55,7 @@ def calculate():
                 total = total + expense.spent_amount
                 spent_amount[idx] += expense.spent_amount
 
-        rent = 30000 * (((range_end_day - range_start_day+1) / last_day_of_month))
+        rent = rent_amount * (((range_end_day - range_start_day+1) / last_day_of_month))
         for idx in range(main_idx, users_count):
             spent_per_head[idx] += ((total + rent)/ (users_count-main_idx))
 

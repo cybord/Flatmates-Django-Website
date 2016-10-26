@@ -1,3 +1,10 @@
+To create a repo - semaphore:
+echo "# Semaphores" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/gajen55/Semaphores.git
+git push -u origin master
 
 
 To Update repo with new files, deleted files and modified files:
@@ -5,3 +12,7 @@ git add -A
 
 to commit:
 git commit -m "message about changes"
+
+to get the updates from remote repo, without affecting local changes:
+git pull
+ctrl x
