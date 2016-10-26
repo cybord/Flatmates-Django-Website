@@ -17,5 +17,4 @@ urlpatterns = [
     url(r'^profile/$', views.Profile.as_view(), name = 'profile'),
     url(r'^edit/$', views.EditEntries.as_view(), name='edit'),
     url(r'^change_password/$', views.ChangePassword.as_view(),name='change_password'),
-    #url('^', include('django.contrib.auth.urls')),
 ]

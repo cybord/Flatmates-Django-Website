@@ -17,6 +17,9 @@ from .utils import calculate
 from django.contrib.auth import views
 from django.contrib import messages
 
+from django import forms
+import django_excel as excel
+
 
 
 def home(request):
@@ -198,5 +201,3 @@ class EditEntries(LoginRequiredMixin, generic.View):
 
     def get(self,request):
         return render(request, self.template_name,)
-
-
